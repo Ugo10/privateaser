@@ -146,6 +146,57 @@ const actors = [{
   }]
 }];
 
+function booker()
+{
+ 
+  for(var i in events)
+  {
+    var temp_id= events[i].barId;
+    var temp_price=0;
+    for(var j in bars)
+    {
+      if( bars[j].id === temp_id  )
+      {
+        temp_price = (bars[j].pricePerHour)*events[i].time + (bars[j].pricePerPerson)*events[i].persons;
+        events[i].price = temp_price;
+      }
+
+    }
+
+  }
+  return;
+}
+function discount()
+{
+  for(var p in events)
+  {
+    var nbs_personnes = events[p].persons;
+    if(nbs_personnes>=10 && nbs_personnes<20 ){ events[p].price=events[p].price*0.9;}
+    if(nbs_personnes>=20 && nbs_personnes<60){ events[p].price=events[p].price*0.7;}
+    if(nbs_personnes>=60){events[p].price=events[p].price*0.5;}
+  }
+  return;
+}
+
+function applyDeductible()
+{
+  for(var i of events)
+  {
+    if(i.options.deductibleReduction === true)
+      {
+          i.commission.privateaser = i.persons;
+      }
+   
+  }
+  return;
+}
+
+booker();
+discount();
+give_money();
+applyDeductible();
+
+
 console.log(bars);
 console.log(events);
 console.log(actors);
